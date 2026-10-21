@@ -5,7 +5,7 @@ class View {
 	public static $current_page;
 
 	function get($key) {
-		return self::$_vars[$key];
+		return self::$_vars[$key] ?? null;
 	}
 
 	function set($key, $value) {

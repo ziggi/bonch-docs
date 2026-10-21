@@ -4,7 +4,7 @@ class Model_Widget_ItemTypeMenu extends Model {
 
 	public function getContent($active_name, $sem_num = null) {
 		$params = explode('/', $active_name);
-		$item_name = $params[1];
+		$item_name = $params[1] ?? '';
 
 		$result = $this->db->query("SELECT * FROM `categories` WHERE `Name`='$item_name'");
 
@@ -23,10 +23,10 @@ class Model_Widget_ItemTypeMenu extends Model {
 		$result = null;
 		if ($sem_num != null) {
 			$sem_date = $this->getDateBySemester($sem_num);
-			$date_from = $sem_date['year'] . "-" . $sem_date['month'] . "-00 00:00:00";
+			$date_from = sprintf('%04d-%02d-01 00:00:00', $sem_date['year'], $sem_date['month']);
 
 			$sem_date = $this->getDateBySemester($sem_num + 1);
-			$date_to = $sem_date['year'] . "-" . $sem_date['month'] . "-00 00:00:00";
+			$date_to = sprintf('%04d-%02d-01 00:00:00', $sem_date['year'], $sem_date['month']);
 
 			$result = $this->db->query("SELECT `Type` FROM `item` WHERE `CategoryID`=$category_id AND `CreationDate`>='$date_from' AND `CreationDate`<'$date_to'");
 		} else {
@@ -47,8 +47,8 @@ class Model_Widget_ItemTypeMenu extends Model {
 
 		$result_data = array();
 		foreach ($type_array as $row) {
-			$active = ($params[2] == $row) ? 1 : 0;
-			$result_data[] = array('Name' => $row, 'Title' => $name_array[$row], 'Active' => $active);
+			$active = (($params[2] ?? null) == $row) ? 1 : 0;
+			$result_data[] = array('Name' => $row, 'Title' => $name_array[$row] ?? $row, 'Active' => $active);
 		}
 
 		return $result_data;

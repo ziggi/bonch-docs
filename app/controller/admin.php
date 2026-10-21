@@ -21,11 +21,11 @@ class Controller_Admin extends Controller {
 	function pageAction($params) {
 		$news_model = new Model_Admin_Page();
 
-		$action = $params[0];
+		$params = (array)$params;
+		$action = array_shift($params);
 		if (empty($action)) {
 			$action = 'add';
 		}
-		array_shift($params);
 
 		// проверяем на существование
 		if ( !method_exists($news_model, $action) ) {
@@ -45,11 +45,11 @@ class Controller_Admin extends Controller {
 	function newsAction($params) {
 		$news_model = new Model_Admin_News();
 
-		$action = $params[0];
+		$params = (array)$params;
+		$action = array_shift($params);
 		if (empty($action)) {
 			$action = 'add';
 		}
-		array_shift($params);
 
 		// проверяем на существование
 		if ( !method_exists($news_model, $action) ) {
@@ -71,11 +71,11 @@ class Controller_Admin extends Controller {
 	function itemAction($params) {
 		$news_model = new Model_Admin_Item();
 
-		$action = $params[0];
+		$params = (array)$params;
+		$action = array_shift($params);
 		if (empty($action)) {
 			$action = 'add';
 		}
-		array_shift($params);
 
 		// проверяем на существование
 		if ( !method_exists($news_model, $action) ) {

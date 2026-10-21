@@ -5,7 +5,7 @@ if (isset($data['errorMsg'])) {
 	return;
 }
 
-$categories = $data['categories'];
+$categories = $data['categories'] ?? array();
 unset($data['categories']);
 
 ?>

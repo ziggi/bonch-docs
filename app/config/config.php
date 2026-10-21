@@ -3,7 +3,7 @@
 define('DEBUG', true);
 
 define('SITE_PATCH', '');
-define('SITE_URL', '//'.$_SERVER['HTTP_HOST'].'/'.SITE_PATCH);
+define('SITE_URL', '//'.($_SERVER['HTTP_HOST'] ?? '').'/'.SITE_PATCH);
 define('SITE_DIR', dirname( __FILE__ ) . '/../../');
 
 define('DB_TYPE', 'mysql');

@@ -20,7 +20,7 @@ if (isset($data['error']) && isset($data['errorMsg'])) {
 		<div class="col-lg-3">
 		<select class="form-control" id="inputCategory" name="inputCategory">
 <?php
-foreach ($data['categories'] as $row) {
+foreach ($data['categories'] ?? array() as $row) {
 	echo "<option>" . $row['Label'] . "</option>";
 }
 ?>

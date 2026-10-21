@@ -38,11 +38,11 @@ class Model_Admin_Item extends Model_Item {
 
 		$result = $this->db->query("SELECT * FROM `type` WHERE `Name`='$type'");
 		$array = $this->db->fetch_assoc($result);
-		$type = $array['Type'];
+		$type = $array['Type'] ?? null;
 
 		$category_name = null;
 		$category_id = null;
-		foreach ($result_data['categories'] as $row) {
+		foreach ($result_data['categories'] ?? array() as $row) {
 			if ($row['Label'] == $category_label) {
 				$category_name = $row['Name'];
 				$category_id = $row['ID'];
@@ -116,7 +116,7 @@ class Model_Admin_Item extends Model_Item {
 	}
 
 	function delete($params) {
-		$id = $params[0];
+		$id = (int)($params[0] ?? 0);
 
 		$result = $this->db->query("
 			SELECT
@@ -129,8 +129,12 @@ class Model_Admin_Item extends Model_Item {
 		");
 		$array = $this->db->fetch_assoc($result);
 
-		$file_name = SITE_DIR . 'files/' . $array['CategoryName'] . '/' . $array['FileName'];
-		unlink($file_name);
+		if ($array) {
+			$file_name = SITE_DIR . 'files/' . $array['CategoryName'] . '/' . $array['FileName'];
+			if (is_file($file_name)) {
+				unlink($file_name);
+			}
+		}
 
 		$this->db->query("
 			DELETE i, f

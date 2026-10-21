@@ -58,10 +58,10 @@ class Model_Item extends Model
 		$result_data[0]['Sems'] = $sems_array;
 
 		$sem_date = $this->getDateBySemester($sem_number);
-		$date_from = $sem_date['year'] . "-" . $sem_date['month'] . "-00 00:00:00";
+		$date_from = sprintf('%04d-%02d-01 00:00:00', $sem_date['year'], $sem_date['month']);
 
 		$sem_date = $this->getDateBySemester($sem_number + 1);
-		$date_to = $sem_date['year'] . "-" . $sem_date['month'] . "-00 00:00:00";
+		$date_to = sprintf('%04d-%02d-01 00:00:00', $sem_date['year'], $sem_date['month']);
 
 		$result = $this->db->query("SELECT * FROM `item` WHERE `Type`='$item_type' AND `CategoryID`=".$categories_array['ID']." AND `CreationDate`>='$date_from' AND `CreationDate`<'$date_to' ORDER BY `CreationDate`");
 		if (empty($result) || $this->db->num_rows($result) == 0) {
@@ -134,7 +134,7 @@ class Model_Item extends Model
 	public function getFileHash($file_id) {
 		$result = $this->db->query("SELECT `Hash` FROM `files` WHERE `ID`=$file_id");
 		$array = $this->db->fetch_assoc($result);
-		return $array['Hash'];
+		return $array['Hash'] ?? null;
 	}
 
 	function formatDate($date)

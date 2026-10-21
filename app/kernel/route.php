@@ -16,7 +16,7 @@ class Route {
 		$action = 'main';
 		$params = null;
 
-		$uri = substr($_SERVER['REQUEST_URI'], strlen(SITE_PATCH) + 1);
+		$uri = substr($_SERVER['REQUEST_URI'] ?? '', strlen(SITE_PATCH) + 1);
 		$routes = explode('/', $uri);
 
 		// получаем имя контроллера

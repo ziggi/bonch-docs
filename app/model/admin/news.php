@@ -23,7 +23,7 @@ class Model_Admin_News extends Model_News {
 	}
 
 	function edit($params) {
-		$id = $params[0];
+		$id = (int)($params[0] ?? 0);
 		
 		$request = Kernel::app()->request();
 
@@ -36,7 +36,7 @@ class Model_Admin_News extends Model_News {
 	}
 
 	function delete($params) {
-		$id = $params[0];
+		$id = (int)($params[0] ?? 0);
 		$this->db->query("DELETE FROM `news` WHERE `ID`=$id");
 		Kernel::redirect(SITE_URL . "admin/news/all");
 	}

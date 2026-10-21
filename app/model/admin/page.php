@@ -15,7 +15,7 @@ class Model_Admin_Page extends Model_Page {
 
 		$result = $this->db->query("SELECT * FROM `page` ORDER BY `Position` DESC");
 		$array = $this->db->fetch_assoc($result);
-		$position = $array['Position'] + 1;
+		$position = ($array['Position'] ?? 0) + 1;
 
 		$this->db->query("INSERT INTO `page` (`Position`, `Name`, `Title`, `Text`) VALUES ($position, '$name', '$title', '$text')");
 		
@@ -61,15 +61,18 @@ class Model_Admin_Page extends Model_Page {
 	}
 	
 	function update($params) {
-		$name = urldecode($params[0]);
-		$type = $params[1];
+		$name = urldecode($params[0] ?? '');
+		$type = $params[1] ?? null;
 
 		switch ($type) {
 			case 'position':
-				$pos_type = $params[2];
+				$pos_type = $params[2] ?? null;
 
 				$result = $this->db->query("SELECT * FROM `page` WHERE `Name`='$name'");
 				$array = $this->db->fetch_assoc($result);
+				if (!$array) {
+					break;
+				}
 
 				$new_position = $array['Position'];
 				$old_position = $array['Position'];
@@ -89,7 +92,7 @@ class Model_Admin_Page extends Model_Page {
 	}
 
 	function delete($params) {
-		$name = urldecode($params[0]);
+		$name = urldecode($params[0] ?? '');
 		$this->db->query("DELETE FROM `page` WHERE `Name`='$name'");
 		Kernel::redirect(SITE_URL . "admin/page/all");
 	}

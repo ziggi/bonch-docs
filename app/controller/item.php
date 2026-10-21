@@ -11,8 +11,16 @@ class Controller_Item extends Controller {
 		$this->showAction();
 	}
 
-	function showAction($params) {
+	function showAction($params = null) {
+		if (empty($params)) {
+			throw new Exception('Нет данных');
+		}
 		$data = $this->model->getItem($params);
+
+		// getItem() redirected to the other item type
+		if ($data === null) {
+			return;
+		}
 
 		if ($this->isAjax()) {
 			$changeLayout = (bool)Kernel::app()->request()->get('changeLayout');
@@ -23,7 +31,7 @@ class Controller_Item extends Controller {
 
 			$changeType = (bool)Kernel::app()->request()->get('changeType');
 			if ($changeType) {
-				$this->view->ajax('item/' . $params[1] . '.php', $data);
+				$this->view->ajax('item/' . ($params[1] ?? 'lection') . '.php', $data);
 				return;
 			}
 
@@ -40,7 +48,7 @@ class Controller_Item extends Controller {
 	}
 
 	function downloadAction($params) {
-		$success = $this->model->downloadItem($params[0]);
+		$success = $this->model->downloadItem($params[0] ?? '');
 		if ($success == 0) {
 			throw new Exception('Файл не существует');
 		}

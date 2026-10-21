@@ -9,7 +9,7 @@ class Mysql implements Database {
 	}
 
 	public function close() {
-		return mysqli_close($this->mysqli);
+		return mysqli_close(self::$mysqli);
 	}
 
 	public function query($query) {

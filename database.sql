@@ -104,8 +104,8 @@ CREATE TABLE `item` (
   `About` text NOT NULL,
   `Description` longtext NOT NULL,
   `CategoryID` int(20) NOT NULL DEFAULT '0',
-  `CreationDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `EditionDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `EditionDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `FileID` int(32) UNSIGNED NOT NULL DEFAULT '0',
   `PackFileHash` varchar(32) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -120,7 +120,7 @@ CREATE TABLE `news` (
   `ID` bigint(20) UNSIGNED NOT NULL,
   `Title` varchar(128) NOT NULL DEFAULT '',
   `Text` longtext NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `Date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
