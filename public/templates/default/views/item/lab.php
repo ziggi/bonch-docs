@@ -14,7 +14,7 @@ if (isset($data[0])) {
 $pack_file_hash = null;
 
 foreach ($data as $row) {
-	if (isset($row['PackFileHash']) && $row['PackFileHash'] != 0) {
+	if (isset($row['PackFileHash']) && (int)$row['PackFileHash'] !== 0) {
 		$pack_file_hash = $row['FileHash'];
 		continue;
 	}
